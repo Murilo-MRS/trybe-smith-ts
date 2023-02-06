@@ -1,12 +1,7 @@
 interface IToken {
-  payload: {
-    username: string,
-    vocation: string,
-    level: number,
-    password: string
-  };
-  iat?: number;
-  exp?: number;
+  username: string,
+  vocation: string,
+  level: number,
 }
 
 export default IToken;

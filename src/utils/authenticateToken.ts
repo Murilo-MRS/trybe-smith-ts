@@ -4,18 +4,14 @@ const secret = process.env.JWT_SECRET || 'secret';
 
 const authenticateToken = async (token: string) => {
   if (!token) {
-    const error = new Error('Token not found');
-    error.type = 'INVALID_TOKEN';
-    throw error;
+    return { type: 'INVALID_TOKEN', message: 'Token not found' };
   }
 
   try {
-    const verificationResponse = await jwt.verify(token, secret);
+    const verificationResponse = jwt.verify(token, secret);
     return verificationResponse;
   } catch (err) {
-    const error = new Error('Expired or invalid token');
-    error.type = 'INVALID_TOKEN';
-    throw error;
+    return { type: 'INVALID_TOKEN', message: 'Expired or invalid token' };
   }
 };
 
