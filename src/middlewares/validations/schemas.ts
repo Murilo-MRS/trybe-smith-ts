@@ -11,3 +11,6 @@ export const userBodySchema = Joi.object({
   level: Joi.number().min(1).positive().required(),
   password: Joi.string().min(8).required(),
 });
+
+const orderBodySchema = Joi.number().min(1).positive().required();
+export const orderListSchema = Joi.array().items(orderBodySchema);

@@ -13,7 +13,7 @@ const authenticateMiddleware : Handler = async (req, res, next) => {
     req.body.user = user;
     next();
   } catch (err) {
-    return { message: 'Invalid token' };
+    return res.status(401).json({ message: 'Invalid token' });
   }
 };
 
