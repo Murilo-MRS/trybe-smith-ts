@@ -1,4 +1,4 @@
-import { Pool, RowDataPacket } from 'mysql2/promise';
+import { Pool, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import IOrder from '../interfaces/order.interface';
 
 export default class OrderModel {
@@ -8,14 +8,23 @@ export default class OrderModel {
     this.connection = connection;
   }
 
-  // public async create(order: IOrder): Promise<IOrder> {
-  //   const { name, amount } = order;
-  //   const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
-  //     'INSERT INTO Trybesmith.orders (name, amount) VALUES (?, ?)',
-  //     [name, amount],
-  //   );
-  //   return { id: insertId, ...order };
-  // }
+  public async bulkCreate(productsId: number[], userId : number): Promise<number> {
+    const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
+      'INSERT INTO Trybesmith.orders (user_id) VALUES (?)',
+      [userId],
+    );
+
+    await Promise.all(
+      productsId.map(async (product: number) => {
+        await this.connection.execute(`
+        UPDATE Trybesmith.products SET order_id = ? WHERE id = ?
+        `, [insertId, product]);
+      }),
+    );
+
+    return insertId;
+  }
+
   // json_arrayagg transforma a visualizacao de dados da tabela em array
   public async getAll(): Promise<IOrder[]> {
     const [result] = await this.connection.execute<RowDataPacket[] & IOrder[]>(`

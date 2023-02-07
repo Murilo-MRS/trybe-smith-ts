@@ -4,6 +4,7 @@ export interface IUserCredentials {
 }
 
 export interface IUser extends IUserCredentials {
+  id?: number,
   level: number;
   vocation: string;
 }

@@ -22,6 +22,7 @@ export default class LoginService {
     }
 
     const payload = {
+      id: user.id,
       username: user.username,
       vocation: user.vocation,
       level: user.level,

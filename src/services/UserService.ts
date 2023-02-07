@@ -17,6 +17,7 @@ export default class UserService {
     if (!createdUser) return { message: 'Erro ao criar usuário' };
 
     const payload = {
+      id: createdUser,
       username: user.username,
       vocation: user.vocation,
       level: user.level,
