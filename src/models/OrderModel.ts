@@ -8,7 +8,7 @@ export default class OrderModel {
     this.connection = connection;
   }
 
-  public async bulkCreate(productsId: number[], userId : number): Promise<number> {
+  public async bulkCreate(productsId: number[], userId : number): Promise<IOrder> {
     const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
       'INSERT INTO Trybesmith.orders (user_id) VALUES (?)',
       [userId],
@@ -22,7 +22,7 @@ export default class OrderModel {
       }),
     );
 
-    return insertId;
+    return { userId, productsIds: productsId };
   }
 
   // json_arrayagg transforma a visualizacao de dados da tabela em array

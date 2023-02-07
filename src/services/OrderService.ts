@@ -11,9 +11,9 @@ export default class OrderService {
   }
 
   public async bulkCreate(orderList: number[], userId : number): Promise<IOrder> {
-    await this.model.bulkCreate(orderList, userId);
+    const data = await this.model.bulkCreate(orderList, userId);
     
-    return { userId, productsIds: orderList };
+    return data;
   }
 
   public async getAll(): Promise<IOrder[]> {

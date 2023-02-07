@@ -6,10 +6,10 @@ export default class OrderController {
   constructor(private orderService = new OrderService()) {}
 
   public createOrder : Handler = async (req: Request, res: Response) => {
-    const { productIds } = req.body;
+    const { productsIds } = req.body;
     const { id } = req.body.user;
     
-    const newOrder = await this.orderService.bulkCreate(productIds, id);
+    const newOrder = await this.orderService.bulkCreate(productsIds, id);
     res.status(statusCodes.CREATED).json(newOrder);
   };
 
